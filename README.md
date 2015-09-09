@@ -1,6 +1,6 @@
 # elbot
 
-elbot is a chat bot on [soozy][https://soozy.slack.com/].
+elbot is a chat bot on [soozy](https://soozy.slack.com/).
 
 ## Run Emacs daemon
 
