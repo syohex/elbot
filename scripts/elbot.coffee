@@ -20,5 +20,5 @@ module.exports = (robot) ->
         res.send err
       else
         result = stdout.toString()
-        formatted = result.replace(/\\n/g, "\n")
+        formatted = result.replace(/^"/g, "").replace(/"\s*$/g, "").replace(/\\n/g, "\n")
         res.send formatted
