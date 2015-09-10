@@ -18,9 +18,12 @@
     insert-file insert-file-1 insert-file-contents insert-file-contents-literally
     insert-file-literally
 
+    require load
+
     find-alternate-file find-alternate-file-other-window
     find-file find-file--read-only find-file-at-point find-file-existing
-    find-file-literally find-file-literally-at-point find-file-name-handler
+    find-file-literally
+    find-file-literally-at-point
     find-file-noselect find-file-noselect-1 find-file-other-frame find-file-other-window
     find-file-read-args find-file-read-only find-file-read-only-other-frame
     find-file-read-only-other-window
