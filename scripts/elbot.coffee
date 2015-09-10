@@ -6,10 +6,19 @@ module.exports = (robot) ->
     opt = {timeout: 5000}
     child = execFile 'emacsclient', args, opt, (err, stdout, stderr) ->
       if err != null
-        res.send err
+        if /\*ERROR\*/.test stderr
+          res.send stderr
+        else
+          res.send "Timeout :alarm_clock:"
       else
         result = stdout.toString()
-        formatted = result.replace(/\\n/g, "\n")
+
+        if matched = /^"\[ELBOT_ERROR\](.+)/.exec result
+          errmsg = matched[1]
+          formatted = errmsg.replace(/^"/, "").replace(/"\s*$/, "").replace(/\\n/g, "\n")
+        else
+          formatted = result.replace(/\\n/g, "\n")
+
         res.send formatted
 
   robot.respond /doc (.+)/i, (res) ->
