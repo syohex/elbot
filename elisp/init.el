@@ -7,7 +7,7 @@
 
 (defvar elbot-forbidden-functions
   '(kill-emacs
-    save-buffers-kill-emacs
+    save-buffers-kill-emacs save-buffers-kill-terminal
 
     delete-file delete-directory
 
