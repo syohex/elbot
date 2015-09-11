@@ -1,5 +1,8 @@
 (require 'cl-lib)
 
+(setenv "HUBOT_SLACK_TOKEN" nil)
+(defun mattn () :mattn:)
+
 (defun elbot-doc (keyword)
   (cond ((fboundp keyword) (substring-no-properties (describe-function keyword)))
         ((boundp keyword) (substring-no-properties (describe-variable keyword)))
