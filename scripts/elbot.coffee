@@ -1,3 +1,13 @@
+# Description:
+#   Emacs Lisp evaluation bot.
+#
+# Configuration
+#   Nothing
+#
+# Commands:
+#   elbot eval s-expression - Evaluate s-expression
+#   elbot doc query         - Show documentation about query
+
 child = require('child_process');
 fs = require('fs')
 
