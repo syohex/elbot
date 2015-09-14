@@ -8,9 +8,11 @@ nextDaemonName = () ->
   daemonIndex = ((daemonIndex + 1) & 0xffff)
   "elbot#{daemon}"
 
+
 removeSocket = (daemon) ->
   try
     fs.unlinkSync "/tmp/emacs#{process.getuid()}/#{daemon}"
+
 
 killEmacsDaemon = (daemon) ->
   args = ["-eo", "pid,args"]
@@ -29,7 +31,7 @@ killEmacsDaemon = (daemon) ->
           removeSocket daemon
 
 
-runEmacsClient = (res, sexp, emacs, daemon) ->
+runEmacsClient = (res, sexp, daemon) ->
   clientArgs = ['-s', daemon, "-e", sexp]
   clientOpt  = {timeout: 3000}
   eclient = child.execFile 'emacsclient', clientArgs, clientOpt, (err, stdout, stderr) ->
@@ -51,22 +53,20 @@ runEmacsClient = (res, sexp, emacs, daemon) ->
     setTimeout(killEmacsDaemon, 5000, daemon)
 
 
+runEmacsDaemon = () ->
+  removeSocket()
+  daemonName = nextDaemonName()
+  child.spawn 'emacs', ["-Q", "--daemon=#{daemonName}", "-l", "./elisp/init.el"]
+  daemonName
+
+
 module.exports = (robot) ->
   robot.respond /eval (.+)/i, (res) ->
     sexp = res.match[1]
-    removeSocket()
-
-    daemonName = nextDaemonName()
-    emacs = child.spawn 'emacs', ["-Q", "--daemon=#{daemonName}", "-l", "./elisp/init.el"]
-    setTimeout(runEmacsClient, 1000, res, sexp, emacs, daemonName)
+    name = runEmacsDaemon()
+    setTimeout(runEmacsClient, 1000, res, sexp, name)
 
   robot.respond /doc (.+)/i, (res) ->
-    args = ['-s', 'elbot', "-e", "(elbot-doc '#{res.match[1]})"]
-    opt = {timeout: 5000}
-    eclient = child.execFile 'emacsclient', args, opt, (err, stdout, stderr) ->
-      if err != null
-        res.send err
-      else
-        result = stdout.toString()
-        formatted = result.replace(/^"/g, "").replace(/"\s*$/g, "").replace(/\\n/g, "\n")
-        res.send formatted
+    sexp = "(elbot-doc '#{res.match[1]})"
+    name = runEmacsDaemon()
+    setTimeout(runEmacsClient, 1000, res, sexp, name)
