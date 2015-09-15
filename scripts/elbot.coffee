@@ -35,8 +35,8 @@ killEmacsDaemon = (daemon) ->
     for line in lines
       if pidCmd = /^\s*(\d+) (.*)$/.exec line
         pid = parseInt(pidCmd[1], 10)
-
-        if daemonRe.test pidCmd[2]
+        cmd = pidCmd[2]
+        if (daemonRe.test cmd) and (/emacs/.test cmd)
           process.kill pid
           removeSocket daemon
 
