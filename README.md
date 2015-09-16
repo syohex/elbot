@@ -23,7 +23,7 @@ elbot is a chat bot on [soozy](https://soozy.slack.com/).
 ```
 
 
-## Specication
+## Specification
 
 1. Get s-expression from Slack
 2. Launches `emacs --daemon=id` and wait until `emacs --daemon` starts
