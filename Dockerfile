@@ -15,7 +15,7 @@ RUN apt-get update && \
       emacs-snapshot-el emacs-snapshot-nox
     
 RUN mkdir -p /usr/local/node && \
-    curl -sSL https://nodejs.org/dist/latest/node-v4.0.0-linux-x64.tar.gz | \
+    curl -sSL https://nodejs.org/dist/latest/node-v4.1.0-linux-x64.tar.gz | \
       tar -v -C /usr/local/node -zx --strip-components=1
 ENV PATH /usr/local/node/bin:$PATH
 
