@@ -2,10 +2,11 @@
 
 elbot is a chat bot on [soozy](https://soozy.slack.com/).
 
-## Run Emacs daemon
+## Setup and Run
 
 ```
-% emacs --daemon=elbot -Q -l elisp/init.el
+% sudo docker build -t `whoami`/elbot .
+% sudo docker run -e HUBOT_SLACK_TOKEN=your_token --name elbot `whoami`/elbot
 ```
 
 ## Commands
