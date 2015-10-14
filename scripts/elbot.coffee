@@ -76,6 +76,11 @@ module.exports = (robot) ->
     name = runEmacsDaemon()
     setTimeout(runEmacsClient, 1000, res, sexp, name)
 
+  robot.hear /^:e (.+)/i, (res) ->
+    sexp = res.match[1]
+    name = runEmacsDaemon()
+    setTimeout(runEmacsClient, 1000, res, sexp, name)
+
   robot.respond /doc (.+)/i, (res) ->
     sexp = "(elbot-doc '#{res.match[1]})"
     name = runEmacsDaemon()
