@@ -14,6 +14,9 @@ RUN add-apt-repository -y ppa:ubuntu-elisp/ppa
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
       emacs-snapshot-el emacs-snapshot-nox
+
+COPY elisp/init-package.el /tmp
+RUN emacs --script /tmp/init-package.el
     
 RUN git clone https://github.com/syohex/elbot /usr/local/elbot && \
     cd /usr/local/elbot && npm install
